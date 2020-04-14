@@ -13,7 +13,7 @@
 
 TParseState Interpret(TParseState currentState, char c)
 {
-    TParseState nextState;
+    TParseState nextState = PARSE_ERROR;
 
     switch (currentState)
     {
