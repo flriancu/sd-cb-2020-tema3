@@ -32,12 +32,12 @@ typedef enum
     PARSE_ERROR             = 0,
     PARSE_CONTENTS          = 1,
     PARSE_OPENING_BRACKET   = 2,
-    PARSE_TAG_TYPE          = 3,//gata
-    PARSE_CLOSING_TAG       = 4,//gata
+    PARSE_TAG_TYPE          = 3,    /* gata */
+    PARSE_CLOSING_TAG       = 4,    /* gata */
     PARSE_REST_OF_TAG       = 5,
-    PARSE_ATTRIBUTE_NAME    = 6,//gata
-    PARSE_ATTRIBUTE_EQ      = 7,//gata
-    PARSE_ATTRIBUTE_VALUE   = 8,//gata
+    PARSE_ATTRIBUTE_NAME    = 6,     /* gata */
+    PARSE_ATTRIBUTE_EQ      = 7,     /* gata */
+    PARSE_ATTRIBUTE_VALUE   = 8,     /* gata */
     PARSE_SELF_CLOSING      = 9,
 } TParseState;
 

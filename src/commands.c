@@ -134,7 +134,7 @@ TArb findId(TArb arb, char *id) {
 }
 
 /**
- * Resetes the ids of a tree starting from arb and its children.
+ * Resets the ids of a tree starting from arb and its children.
  * Input: arb - the node in the tree
  *        id - the new id of the node
  * Output: N\A.
@@ -150,7 +150,7 @@ void redoIdOrder(TArb arb, char *id) {
 	int currChild = 1;
 
 	while(child != NULL) {
-		char id_aux[strlen(id) + 3];
+		char id_aux[1024];
 		sprintf(id_aux, "%s.%d", id, currChild);
 		redoIdOrder(child, id_aux);
 
@@ -176,7 +176,8 @@ void addTagCommand(FILE *fin, FILE *fout, TArb root) {
 
 	TArb parent = findId(root, id);
 	if(parent == NULL) {
-		fgets(trash, 100, fin);	// read until endline
+        /* read until end of line */
+		fgets(trash, 100, fin);
 		fprintf(fout, "Add tag failed: node with id %s not found!\n", id);
 		return;
 	}
@@ -198,7 +199,8 @@ void addTagCommand(FILE *fin, FILE *fout, TArb root) {
 		child->nextSibling = ParseArb(fin, PARSE_CONTENTS, id_aux);
 	}
 
-	fseek(fin, 1, SEEK_CUR); // skip until endline
+    /* skip until end of line */
+	fseek(fin, 1, SEEK_CUR);
 }
 
 /**
@@ -436,27 +438,27 @@ void appendStyle(TArb arb, char *attrStr) {
 
 	/* Start by updating the old attributed. */
 	while(old != NULL) {
-		TAttr new = list, prev_new = NULL;
+		TAttr newAttr = list, prev_new = NULL;
 
-		while(new != NULL) {
-			if(strcmp(old->name, new->name) == 0) {
+		while(newAttr != NULL) {
+			if(strcmp(old->name, newAttr->name) == 0) {
 				free(old->value);
-				old->value = new->value;
-				new->value = NULL;
+				old->value = newAttr->value;
+                newAttr->value = NULL;
 
 				if(prev_new == NULL) {
-					list = new->next;
+					list = newAttr->next;
 				} else {
-					prev_new->next = new->next;
+					prev_new->next = newAttr->next;
 				}
 
-				TAttr aux = new;
-				new = new->next;
+				TAttr aux = newAttr;
+                newAttr = newAttr->next;
 				aux->next = NULL;
 				freeTAttr(aux);
 			} else {
-				prev_new = new;
-				new = new->next;
+				prev_new = newAttr;
+                newAttr = newAttr->next;
 			}
 		}
 

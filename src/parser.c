@@ -33,7 +33,7 @@ TSelector ParseSelector(FILE *fin) {
 
 	while(c != '\"') {
 		if(c == '.') {
-			// read class
+			/* read class */
 			curr = 0;
 			c = fgetc(fin);
 
@@ -48,7 +48,7 @@ TSelector ParseSelector(FILE *fin) {
 			CheckMemoryError(cssSelector.className);
 			memcpy(cssSelector.className, buf, curr);
 		} else if(c == '#') {
-			// read id
+			/* read id */
 			curr = 0;
 			c = fgetc(fin);
 
@@ -135,7 +135,7 @@ TParseState ParseCurrentState(
 TAttr ParseStyleAttribute(char *attrStr) {
 	TAttr head = NULL, last = NULL;
 
-	int len = strlen(attrStr);
+	int len = (int)strlen(attrStr);
 	char buf[100];
 	int curr = 0, i;
 
@@ -199,7 +199,7 @@ TArb ParseArb(FILE *fin, TParseState currentState, char *id) {
 	TArb lastChild = NULL;
 	int currChild = 1;
 
-	TAttr lastStyleAttr = NULL, lastOtherAttr = NULL;
+	TAttr lastOtherAttr = NULL;
 
 	char c = fgetc(fin);
 	currentState = Interpret(currentState, c);

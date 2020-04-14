@@ -70,8 +70,10 @@ TParseState Interpret(TParseState currentState, char c)
     }
 
     /* For debugging */
-    // printf("%d", nextState);
-    // if (c == '\n') printf("\n");
+#if 0
+    printf("%d", nextState);
+    if (c == '\n') printf("\n");
+#endif
 
     return nextState;
 }

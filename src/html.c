@@ -7,19 +7,19 @@
  * Input: root - the root of the tree on which the commands are applied;
  *		  commandsInput - the name of the input file;
  *		  commandsOutput - the name of the output file.
- * Ouput: N\A.
+ * Output: N\A.
  */
-void ResolveCommands(TArb root, char *commandsInput, char *commandsOuput) {
+void ResolveCommands(TArb root, char *commandsInput, char *commandsOutput) {
 	FILE *fin = fopen(commandsInput, "rt");
-	FILE *fout = fopen(commandsOuput, "wt");
+	FILE *fout = fopen(commandsOutput, "wt");
 
 	if(!fin || !fout) {
 		fprintf(stderr, "Cannot open files for commands.\n");
 		exit(-1);
 	}
 
-	int i, commandsCount, tokens;
-	tokens = fscanf(fin, "%d", &commandsCount);
+    int i, commandsCount, tokens;
+    tokens = fscanf(fin, "%d", &commandsCount);
     if (tokens != 1) {
         fprintf(stderr, "First line must contain a number.\n");
         exit(-1);
