@@ -34,12 +34,12 @@ def make_parser():
     parser.add_argument("-i", "--input", required=True, help="Input image")
     parser.add_argument("-m", "--mode", choices=['image'], required=True, help="Generator mode")
     parser.add_argument("-o", "--output", required=True, help="Output HTML file")
-    parser.add_argument("-w", "--width", required=True, type=int, help="Final width of the image")
+    parser.add_argument("-w", "--width", required=True, type=int, help="Desired width of the image")
 
     return parser
 
 
-def process_image(input_path, final_width):
+def process_image(input_path, desired_width):
     ret = RET.OK
     im = None
 
@@ -58,12 +58,12 @@ def process_image(input_path, final_width):
 
     if ret == RET.OK:
         # Resize to fixed width
-        output_width = final_width * 10
+        output_width = desired_width * 10
         output_height = int(output_width * im.shape[0] / im.shape[1])
         im = resize(im, (output_height, output_width))
         iprint("Resized to:", im.shape)
 
-        # Pad to multiple of 10
+        # Pad to multiple of 10 with light gray
         fill_value = 200
         pad_h = im.shape[1] % 10
         pad_v = im.shape[0] % 10
@@ -72,7 +72,7 @@ def process_image(input_path, final_width):
         im = np.pad(im, [(0, pad_v), (0, pad_h), (0, 0)], mode='constant', constant_values=fill_value*1./255)
         iprint("Size after padding:", im.shape)
         
-        # Downscale
+        # Downscale after padding
         im = resize(im, (im.shape[0] / 10, im.shape[1] / 10))
         iprint("Downscaled to:", im.shape)
 
@@ -210,7 +210,8 @@ def main():
             eprint(str(e))
             ret = RET.FAIL
 
-    iprint("File generated:", args.output)
+    if ret == RET.OK:
+        iprint("File generated:", args.output)
 
     return ret
 
