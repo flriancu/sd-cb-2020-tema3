@@ -1,0 +1,8 @@
+How to generate input HTML file:
+
+python3 generate.py -i colorbars.jpg -m image -w 4 -o colorbars-small.html
+python3 generate.py -i colorbars.jpg -m image -w 20 -o colorbars-big.html
+
+How to run homework:
+
+../src/tema3 colorbars-big.html ../res/commands.in _result.html

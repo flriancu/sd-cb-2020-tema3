@@ -643,6 +643,12 @@ int changeStyle_Ancestor(
 		}
 	}
 
+	if (changeStyle_Ancestor(arb->firstChild, ancestorType,
+		type, attrStr, isOverride)) {
+
+		found = 1;
+	}
+
 	if(changeStyle_Ancestor(arb->nextSibling, ancestorType,
 			type, attrStr, isOverride)) {
 
