@@ -106,15 +106,15 @@ declare tests_values_1=(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2) # 29
 declare tests_values_2=(2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3) # 56
 declare valgrind_tests_values=1
 
-for i in {1..24}
+for i in {1..22}
 do
-	test_function "colorbars-small.html" "commands-colorbars-$i.in" "colorbars-small-$i.html" "colorbars-small-$i.html" "${tests_values_1[$i]}" "${valgrind_tests_values}" 
+	test_function "colorbars-small.html" "commands-colorbars-$i.in" "colorbars-small-$i.html" "colorbars-small-$i.html" "${tests_values_1[$i-1]}" "${valgrind_tests_values}" 
 	echo ""
 done
 
-for i in {1..24}
+for i in {1..22}
 do
-	test_function "colorbars-big.html" "commands-colorbars-$i.in" "colorbars-big-$i.html" "colorbars-big-$i.html" "${tests_values_2[$i]}" "${valgrind_tests_values}" 
+	test_function "colorbars-big.html" "commands-colorbars-$i.in" "colorbars-big-$i.html" "colorbars-big-$i.html" "${tests_values_2[$i-1]}" "${valgrind_tests_values}" 
 	echo ""
 done
 
