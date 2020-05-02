@@ -49,16 +49,16 @@ TParseState Interpret(TParseState currentState, char c)
     case PARSE_ATTRIBUTE_NAME:
         if (c == '=')           {   nextState = PARSE_ATTRIBUTE_EQ;     }
         else                    {   nextState = PARSE_ATTRIBUTE_NAME; 
-                                    /* TODO append to `info->temp->name` string */ }
+                                    /* TODO append to a temporary "name" string */ }
         break;
     case PARSE_ATTRIBUTE_EQ:
         if (c == '\"')          {   nextState = PARSE_ATTRIBUTE_VALUE;  }
         break;
     case PARSE_ATTRIBUTE_VALUE:
         if (c == '\"')          {   nextState = PARSE_REST_OF_TAG; 
-                                    /* TODO create attribute from the `info->temp->*` strings*/ }
+                                    /* TODO create attribute from the temporary strings*/ }
         else                    {   nextState = PARSE_ATTRIBUTE_VALUE; 
-                                    /* TODO append to `info->temp->value` string */ }
+                                    /* TODO append to a temporary "value" string */ }
         break;
     case PARSE_SELF_CLOSING:
         if (c == '>')           {   nextState = PARSE_CONTENTS; 

@@ -10,3 +10,4 @@ Structura:
 -   `doc`: documentetie, cerinta
 -   `res`: resurse, fisiere HTML, comenzi etc.
 -   `src`: cod sursa
+-   `test`: teste
