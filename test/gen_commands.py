@@ -52,6 +52,7 @@ def main():
 
     # Generate as many test files as there are commands in the master file
     if ret == RET.OK:
+        lines = [l for l in lines if l.strip()]
         nb = int(lines[0])
         if nb >= len(lines):
             eprint("Not enough lines in the master file")

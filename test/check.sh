@@ -102,26 +102,32 @@ print_header "Tema 3 SD HTML Parser"
 
 #Testing
 
-declare tests_values_1=(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2) # 29
-declare tests_values_2=(2 2 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3 3 3 3 3) # 56
+declare tests_values_1=(1 1 1 1 1 1 1 1) # 8
+declare tests_values_2=(1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2) # 29
+declare tests_values_3=(1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 3 3 3 3 3 3 3 3) # 48
 declare valgrind_tests_values=1
 
-for i in {1..22}
+for i in {1..8}
 do
-	test_function "colorbars-small.html" "commands-colorbars-$i.in" "colorbars-small-$i.html" "colorbars-small-$i.html" "${tests_values_1[$i-1]}" "${valgrind_tests_values}" 
+	test_function "simple.html" "commands-simple-$i.in" "simple-$i.html" "simple-$i.html" "${tests_values_1[$i-1]}" "${valgrind_tests_values}" 
+done
+
+for i in {1..24}
+do
+	test_function "colorbars-small.html" "commands-colorbars-$i.in" "colorbars-small-$i.html" "colorbars-small-$i.html" "${tests_values_2[$i-1]}" "${valgrind_tests_values}" 
 	echo ""
 done
 
-for i in {1..22}
+for i in {1..24}
 do
-	test_function "colorbars-big.html" "commands-colorbars-$i.in" "colorbars-big-$i.html" "colorbars-big-$i.html" "${tests_values_2[$i-1]}" "${valgrind_tests_values}" 
+	test_function "colorbars-big.html" "commands-colorbars-$i.in" "colorbars-big-$i.html" "colorbars-big-$i.html" "${tests_values_3[$i-1]}" "${valgrind_tests_values}" 
 	echo ""
 done
 
 #end Testing
 
 printf "\n%49s [%02d/$max_points]\n" "Total:" $result_points;
-if [ $bonus_points -ne 44 ]; then
+if [ $bonus_points -ne 56 ]; then
 	((bonus_points=0))
 	echo "Failed VALGRIND tests"
 else
