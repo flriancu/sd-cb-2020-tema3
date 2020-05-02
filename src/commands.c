@@ -159,6 +159,25 @@ void redoIdOrder(TArb arb, char *id) {
 	}
 }
 
+int get_next_sibling(char *id)
+{
+	char id_aux[100];
+	char *tok = NULL;
+	int nb;
+
+	strcpy(id_aux, id);
+	tok = strtok(id_aux, ".");
+	while (tok)
+	{
+		strcpy(id_aux, tok);
+		tok = strtok(NULL, ".");
+	}
+
+	nb = 1 + atoi(id_aux);
+	// printf("%s -> %d\n", id, nb);
+	return nb;
+}
+
 /**
  * Corresponds to the "add" command. Searches for the parent's id and
  * appends to its list of children a new node.
@@ -169,10 +188,10 @@ void redoIdOrder(TArb arb, char *id) {
  */
 void addTagCommand(FILE *fin, FILE *fout, TArb root) {
 	char id[100], trash[100];
-	fseek(fin, 4, SEEK_CUR);
+	SKIP_CHARS(fin, 4);
 	fscanf(fin, "%s", id);
 
-	fseek(fin, 10, SEEK_CUR);
+	SKIP_CHARS(fin, 10);
 
 	TArb parent = findId(root, id);
 	if(parent == NULL) {
@@ -194,13 +213,13 @@ void addTagCommand(FILE *fin, FILE *fout, TArb root) {
 		}
 
 		char id_aux[100];
-		sprintf(id_aux, " %s.%d", id, 1 + atoi(child->info->id + strlen(id)));
+		sprintf(id_aux, " %s.%d", id, get_next_sibling(child->info->id));
 
 		child->nextSibling = ParseArb(fin, PARSE_CONTENTS, id_aux);
 	}
 
     /* skip until end of line */
-	fseek(fin, 1, SEEK_CUR);
+	SKIP_CHARS(fin, 1);
 }
 
 /**
@@ -378,7 +397,7 @@ int deleteRecursively_Ancestor(TArb arb, char *ancestorType, char *type) {
  * Output: N\A.
  */
 void deleteRecursivelyCommand(FILE *fin, FILE *fout, TArb root) {
-	fseek(fin, 11, SEEK_CUR);
+	SKIP_CHARS(fin, 11);
 	TSelector cssSelector = ParseSelector(fin);
 	char *failedMsg = "Delete recursively failed: no node found for selector";
 
@@ -669,10 +688,10 @@ int changeStyle_Ancestor(
  * Output: N\A.
  */
 void changeStyleCommand(FILE *fin, FILE *fout, TArb root, int isOverride) {
-	fseek(fin, 11, SEEK_CUR);
+	SKIP_CHARS(fin, 11);
 	TSelector cssSelector = ParseSelector(fin);
 
-	fseek(fin, 8, SEEK_CUR);
+	SKIP_CHARS(fin, 8);
 	char attrStr[100];
 	fgets(attrStr, 100, fin);
 	attrStr[strlen(attrStr)-2] = '\0';

@@ -2,6 +2,16 @@
 
 #include "lib.h"
 
+int fpeek(FILE *stream)
+{
+	int c;
+
+	c = fgetc(stream);
+	ungetc(c, stream);
+
+	return c;
+}
+
 /**
  * Sets *curr to be the index of the last non-whitespace character in
  * a string.
@@ -210,7 +220,7 @@ TArb ParseArb(FILE *fin, TParseState currentState, char *id) {
 	while(c != EOF && currentState != PARSE_CLOSING_TAG) {
 		if(currentState == PARSE_TAG_TYPE) {
 			if(arb->info->type != NULL) {
-				fseek(fin, -1, SEEK_CUR);
+				ungetc(c, fin);
 
 				char id_aux[100];
 				sprintf(id_aux, "%s.%d", id, currChild++);
@@ -227,14 +237,12 @@ TArb ParseArb(FILE *fin, TParseState currentState, char *id) {
 
 				currentState = PARSE_CONTENTS;
 			} else {
-				fseek(fin, -1, SEEK_CUR);
+				ungetc(c, fin);
 				currentState = ParseCurrentState(fin, currentState, buf,&curr);
 
 				arb->info->type = (char *) calloc(curr + 1, sizeof(char));
 				CheckMemoryError(arb->info->type);
 				memcpy(arb->info->type, buf, curr);
-
-				fseek(fin, -1, SEEK_CUR);
 			}
 		}
 
@@ -242,7 +250,7 @@ TArb ParseArb(FILE *fin, TParseState currentState, char *id) {
 			TAttr attr = InitTAttr();
 			CheckMemoryError(attr);
 
-			fseek(fin, -1, SEEK_CUR);
+			ungetc(c, fin);
 			currentState = ParseCurrentState(fin, currentState, buf, &curr);
 			attr->name = (char *) calloc(curr + 1, sizeof(char));
 			CheckMemoryError(attr->name);
@@ -253,7 +261,6 @@ TArb ParseArb(FILE *fin, TParseState currentState, char *id) {
 				currentState = Interpret(currentState, c);
 			}
 
-			//fseek(fin, -1, SEEK_CUR);
 			currentState = ParseCurrentState(fin, currentState, buf, &curr);
 			attr->value = (char *) calloc(curr + 1, sizeof(char));
 			CheckMemoryError(attr->value);
@@ -270,8 +277,6 @@ TArb ParseArb(FILE *fin, TParseState currentState, char *id) {
 					lastOtherAttr = attr;
 				}
 			}
-
-			//fseek(fin, -1, SEEK_CUR);
 		}
 
 		if(currentState == PARSE_SELF_CLOSING) {
@@ -288,7 +293,7 @@ TArb ParseArb(FILE *fin, TParseState currentState, char *id) {
 			}
 
 			if(currentState == PARSE_CONTENTS) {
-				fseek(fin, -1, SEEK_CUR);
+				ungetc(c, fin);
 				currentState = ParseCurrentState(fin, currentState, buf, &curr);
 				arb->info->contents = (char *) calloc(curr + 1, sizeof(char));
 				CheckMemoryError(arb->info->contents);
