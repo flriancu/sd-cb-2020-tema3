@@ -110,6 +110,7 @@ declare valgrind_tests_values=1
 for i in {1..8}
 do
 	test_function "simple.html" "commands-simple-$i.in" "simple-$i.html" "simple-$i.html" "${tests_values_1[$i-1]}" "${valgrind_tests_values}" 
+    echo ""
 done
 
 for i in {1..24}
@@ -127,7 +128,8 @@ done
 #end Testing
 
 printf "\n%49s [%02d/$max_points]\n" "Total:" $result_points;
-if [ $bonus_points -ne 56 ]; then
+NEEDED_BONUS=$((${#tests_values_1[@]}+${#tests_values_2[@]}+${#tests_values_3[@]}))
+if [ $bonus_points -ne $NEEDED_BONUS ]; then
 	((bonus_points=0))
 	echo "Failed VALGRIND tests"
 else
