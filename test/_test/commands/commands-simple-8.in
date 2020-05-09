@@ -1,4 +1,4 @@
-8
+9
 add ID=2.2.2 tagHTML="<li>item4</li>"
 add ID=2.2.2 tagHTML="<li>item5</li>"
 add ID=2.2 tagHTML="<ol></ol>"
@@ -7,3 +7,4 @@ appendStyle selector="p" style="color:blue;"
 overrideStyle selector="p" style="color:green;"
 deleteRecursively selector="ol"
 appendStyle selector="img.imageClass" style="border-style:solid; border:5px;"
+format

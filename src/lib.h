@@ -49,6 +49,12 @@ typedef struct {
 	char *ancestorType;
 } TSelector;
 
+/* same as fseek(fi, x, SEEK_CUR) for text-mode files */
+#define SKIP_CHARS(fi, x) for (int i = 0; i < (x); ++i) { char c; fscanf((fi), "%c", &c); }
+
+/* C equivalent to std::fstream's peek */
+int fpeek(FILE *stream);
+
 /* struct.c */
 TAttr InitTAttr();
 TInfo InitTInfo();

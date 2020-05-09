@@ -1,0 +1,7 @@
+6
+appendStyle selector=".color-other" style="outline: 1px; outline-color: black; outline-style: solid;"
+appendStyle selector=".color-other" style="outline: 2px; outline-color: rgb(200, 0, 200); outline-style: dotted;"
+deleteRecursively selector="#2.1.1.1"
+deleteRecursively selector="#2.1.1.1"
+appendStyle selector=".color-almost-blue" style="outline: 2px; outline-color: orange; outline-style: solid;"
+format

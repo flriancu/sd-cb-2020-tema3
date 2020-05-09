@@ -70,7 +70,7 @@ test_function()
 		test_do_pass $points_per_test
 		#valgrind test
 
-		$VALGRIND $EXEC_NAME $input_file $output_file &> /dev/null
+		$VALGRIND $EXEC_NAME $input_file $commands_file $output_file &> /dev/null
 		if [ $? -eq 0 ]; then
 			printf "[VALGRIND: PASSED]...................................." ${2}
 			bonus_function $points_per_test_vg
