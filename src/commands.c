@@ -165,11 +165,12 @@ int get_next_sibling(char *id)
 	char *tok = NULL;
 	int nb;
 
-	strcpy(id_aux, id);
+	memset(id_aux, 0, 100);
+	memcpy(id_aux, id, strlen(id) + 1);
 	tok = strtok(id_aux, ".");
 	while (tok)
 	{
-		strcpy(id_aux, tok);
+		memcpy(id_aux, tok, strlen(tok) + 1);
 		tok = strtok(NULL, ".");
 	}
 
@@ -727,7 +728,7 @@ void changeStyleCommand(FILE *fin, FILE *fout, TArb root, int isOverride) {
 			} else if(cssSelector.className == NULL) {
 				fprintf(fout, "%s %s!\n", failedMsg, cssSelector.type);
 			} else {
-				fprintf(fout, "%s %s.%s\n", failedMsg, cssSelector.type, 
+				fprintf(fout, "%s %s.%s!\n", failedMsg, cssSelector.type, 
 					cssSelector.className);
 			}
 		}
